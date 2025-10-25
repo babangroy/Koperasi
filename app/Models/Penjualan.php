@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Penjualan extends Model
 {
@@ -60,6 +61,20 @@ class Penjualan extends Model
         $countToday = static::whereDate('tanggal', now()->toDateString())->count() + 1;
         $number = str_pad($countToday, 4, '0', STR_PAD_LEFT);
         return $prefix . $number;
+    }
+
+    public static function getLaba()
+    {
+        return DB::table('penjualans as a')
+            ->selectRaw('a.*, 
+                (a.grand_total - COALESCE(
+                    (SELECT SUM(b.qty * c.harga_beli) 
+                     FROM penjualan_details b 
+                     LEFT JOIN barangs c ON b.barang_id = c.id 
+                     WHERE b.penjualan_id = a.id
+                     GROUP BY b.penjualan_id), 0
+                )) as laba'
+            );
     }
 
 }
