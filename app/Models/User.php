@@ -2,6 +2,11 @@
 
 namespace App\Models;
 
+<<<<<<< HEAD
+=======
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+>>>>>>> 88aa2af (Pesan perubahan kamu di sini)
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,9 +42,12 @@ class User extends Authenticatable implements FilamentUser
         ];
     }
 
+<<<<<<< HEAD
     /**
      * Izinkan semua user untuk mengakses semua panel Filament.
      */
+=======
+>>>>>>> 88aa2af (Pesan perubahan kamu di sini)
     public function canAccessPanel(Panel $panel): bool
     {
         return true;
